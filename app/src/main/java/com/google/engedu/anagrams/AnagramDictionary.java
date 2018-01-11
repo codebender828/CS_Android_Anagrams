@@ -37,7 +37,7 @@ public class AnagramDictionary {
     private static final int MAX_WORD_LENGTH = 7;
 
     /*   Incremenatal Word Length Variable  */
-    private static int wordLength = DEFAULT_WORD_LENGTH;
+    private int wordLength = DEFAULT_WORD_LENGTH;
 
     /*  Random class to generate random numbers  */
     private Random random = new Random();

@@ -38,7 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-
+import java.lang.NullPointerException;
 
 public class AnagramsActivity extends AppCompatActivity {
 
@@ -56,7 +56,9 @@ public class AnagramsActivity extends AppCompatActivity {
         AssetManager assetManager = getAssets();
         try {
             InputStream inputStream = assetManager.open("words.txt");
-            dictionary = new AnagramDictionary(new InputStreamReader(inputStream));
+
+            //Adjustments made here
+            dictionary = new AnagramDictionary(inputStream);
         } catch (IOException e) {
             Toast toast = Toast.makeText(this, "Could not load dictionary", Toast.LENGTH_LONG);
             toast.show();
@@ -127,7 +129,7 @@ public class AnagramsActivity extends AppCompatActivity {
         TextView resultView = (TextView) findViewById(R.id.resultView);
         if (currentWord == null) {
             currentWord = dictionary.pickGoodStarterWord();
-            anagrams = dictionary.getAnagrams(currentWord);
+            anagrams = dictionary.getAnagramsWithTwoMoreLetters(currentWord);
             gameStatus.setText(Html.fromHtml(String.format(START_MESSAGE, currentWord.toUpperCase(), currentWord)));
             fab.setImageResource(android.R.drawable.ic_menu_help);
             fab.hide();
@@ -141,6 +143,7 @@ public class AnagramsActivity extends AppCompatActivity {
             editText.setText(currentWord);
             editText.setEnabled(false);
             fab.setImageResource(android.R.drawable.ic_media_play);
+
             currentWord = null;
             resultView.append(TextUtils.join("\n", anagrams));
             gameStatus.append(" Hit 'Play' to start again");
